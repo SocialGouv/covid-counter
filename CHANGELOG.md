@@ -1,3 +1,11 @@
+## [1.0.7](https://github.com/SocialGouv/covid-counter/compare/v1.0.6...v1.0.7) (2021-07-28)
+
+
+### Bug Fixes
+
+* next basePath config ([490df7d](https://github.com/SocialGouv/covid-counter/commit/490df7db1d130e49f8a9e29ed37dabf58219f114))
+* use use-interval ([1900fb2](https://github.com/SocialGouv/covid-counter/commit/1900fb29d497a0e3b62a0f2447fdad01c553b0a5))
+
 ## [1.0.6](https://github.com/SocialGouv/covid-counter/compare/v1.0.5...v1.0.6) (2021-07-28)
 
 
