@@ -16,14 +16,15 @@ jobs:
 
       - uses: actions/cache@v2
         with:
-          path: '**/node_modules'
+          path: "**/node_modules"
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
 
       # build the website
       - run: |
+          export PUBLIC_URL="/covid-counter";
           yarn
           yarn build
-        
+
       # deploy build to gh-pages
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.0
