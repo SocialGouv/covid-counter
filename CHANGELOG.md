@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/SocialGouv/covid-counter/compare/v1.0.3...v1.0.4) (2021-07-28)
+
+
+### Bug Fixes
+
+* nojekyll ([b021550](https://github.com/SocialGouv/covid-counter/commit/b021550791d12bfbbf6c14633b1cb9e74abdfd55))
+
 ## [1.0.3](https://github.com/SocialGouv/covid-counter/compare/v1.0.2...v1.0.3) (2021-07-28)
 
 
