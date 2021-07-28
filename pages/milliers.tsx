@@ -1,4 +1,4 @@
 import { Counter } from "../src/Counter";
 
-const Page = () => <Counter unit="milliers" />;
+const Page = () => <Counter href="/" unit="milliers" />;
 export default Page;

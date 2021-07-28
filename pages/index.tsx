@@ -1,30 +1,17 @@
-import Link from "next/link";
+import { Counter } from "../src/Counter";
 
-const style = {
-  height: "80vh",
-  margin: "20vh",
-  fontSize: "1.5rem",
-  alignItems: "center",
-  justifyContent: "center",
+const counterStyle = {
+  height: "200px",
+  display: "inline-block",
+  fontSize: "calc(100vw / 7)",
 };
 
-const Page = () => {
-  return (
-    <div style={style}>
-      <li>
-        <Link href={`/counter`}>Compteur Global</Link>
-      </li>
-      <li>
-        <Link href={`/millions`}>1) millions</Link>
-      </li>
-      <li>
-        <Link href={`/milliers`}>2) milliers</Link>
-      </li>
-      <li>
-        <Link href={`/unites`}>3) unités</Link>
-      </li>
-    </div>
-  );
-};
-
+const Page = () => (
+  <div style={{ textAlign: "center", height: "80vh", marginTop: "10vh" }}>
+    <h2>Simulation du nombre de primo-vaccinés</h2>
+    <Counter unit="millions" href={`/millions`} style={counterStyle} />
+    <Counter unit="milliers" href={`/milliers`} style={counterStyle} />
+    <Counter unit="unites" href={`/unites`} style={counterStyle} />
+  </div>
+);
 export default Page;

@@ -1,4 +1,6 @@
-import { useState, useEffect } from "react";
+import Link from "next/link";
+import React, { useState, useEffect, useRef } from "react";
+
 import type { CSSProperties } from "react";
 
 const pad = (num, count) => {
@@ -15,7 +17,7 @@ const useCounter = ({ unit }) => {
   const startDate = new Date("2021-07-25").getTime();
   const secondIncrement = countByDay / (60 * 60 * 24);
 
-  const [value, setValue] = useState(startValue);
+  const [value, setValue] = useState(null);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -25,6 +27,10 @@ const useCounter = ({ unit }) => {
       setValue(startValue + increment);
     }, 200);
   }, [startDate, secondIncrement]);
+
+  if (!value) {
+    return null;
+  }
 
   if (unit === "millions") {
     return Math.floor(value / 1000000);
@@ -49,27 +55,46 @@ const counterStyle = {
   margin: 20,
 };
 
-export const Counter = ({
-  unit,
-  style = {},
-}: {
-  unit?: string;
-  style?: CSSProperties;
-}) => {
-  let fontSize = "calc(80vw / 8)";
-  if (unit === "millions") {
-    fontSize = "calc(80vw / 3)";
-  } else if (unit === "milliers") {
-    fontSize = "calc(80vw / 3)";
-  } else if (unit === "unites") {
-    fontSize = "calc(80vw / 3)";
-  }
+type Unit = "millions" | "milliers" | "unites";
 
-  const styles = {
-    ...counterStyle,
-    fontSize,
-    ...style,
-  };
-  const value = useCounter({ unit });
-  return <div style={styles}>{value}</div>;
+type CounterProps = {
+  href?: string;
+  unit?: Unit;
+  style?: CSSProperties;
 };
+type CounterParams = [CounterProps, any];
+
+export const Counter = React.forwardRef(
+  ({ href, unit, style = {} }: CounterProps, ref) => {
+    const value = useCounter({ unit });
+    let fontSize = "calc(100vw / 5)";
+    if (unit === "millions") {
+      fontSize = "calc(100vw / 3)";
+    } else if (unit === "milliers") {
+      fontSize = "calc(100vw / 3)";
+    } else if (unit === "unites") {
+      fontSize = "calc(100vw / 3)";
+    }
+    const node = useRef<HTMLDivElement>(null);
+    const styles = {
+      ...counterStyle,
+      fontSize,
+      lineHeight: fontSize,
+      ...style,
+    };
+    const content = (
+      <div ref={node} style={styles}>
+        {value}
+      </div>
+    );
+    if (href) {
+      return (
+        <Link href={href}>
+          {/** boxShadow is from dsfr package */}
+          <a style={{ boxShadow: "none" }}>{content}</a>
+        </Link>
+      );
+    }
+    return content;
+  }
+);
