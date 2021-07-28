@@ -1,15 +1,13 @@
 import { Counter } from "../src/Counter";
 
 const Page = () => (
-  <div style={{ textAlign: "center" }}>
-    <Counter style={{ height: "200px" }} />
-    <hr />
+  <div style={{ textAlign: "center", height: "80vh", marginTop: "30vh" }}>
     <Counter
       unit="millions"
       style={{
         height: "200px",
         display: "inline-block",
-        fontSize: "calc(80vw / 8)",
+        fontSize: "calc(100vw / 8)",
       }}
     />
     <Counter
@@ -17,7 +15,7 @@ const Page = () => (
       style={{
         height: "200px",
         display: "inline-block",
-        fontSize: "calc(80vw / 8)",
+        fontSize: "calc(100vw / 8)",
       }}
     />
     <Counter
@@ -25,7 +23,7 @@ const Page = () => (
       style={{
         height: "200px",
         display: "inline-block",
-        fontSize: "calc(80vw / 8)",
+        fontSize: "calc(100vw / 8)",
       }}
     />
   </div>

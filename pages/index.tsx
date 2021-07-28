@@ -12,6 +12,9 @@ const Page = () => {
   return (
     <div style={style}>
       <li>
+        <Link href={`/counter`}>Compteur Global</Link>
+      </li>
+      <li>
         <Link href={`/millions`}>1) millions</Link>
       </li>
       <li>
