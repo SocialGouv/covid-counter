@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/SocialGouv/covid-counter/compare/v1.0.2...v1.0.3) (2021-07-28)
+
+
+### Bug Fixes
+
+* use next.config.js and assetPrefix for gh-pages ([91a2ebe](https://github.com/SocialGouv/covid-counter/commit/91a2ebe7159ca0d037a8cd25bc8ae9e28b21e489))
+
 ## [1.0.2](https://github.com/SocialGouv/covid-counter/compare/v1.0.1...v1.0.2) (2021-07-28)
 
 
