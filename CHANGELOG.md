@@ -1,3 +1,11 @@
+## [1.0.5](https://github.com/SocialGouv/covid-counter/compare/v1.0.4...v1.0.5) (2021-07-28)
+
+
+### Bug Fixes
+
+* index ([59a20b3](https://github.com/SocialGouv/covid-counter/commit/59a20b3229788a3697cb25bd5fd8227ea295c616))
+* single global ([9d1e06f](https://github.com/SocialGouv/covid-counter/commit/9d1e06fd9c822abafbb33d75f188bca0134cb3a6))
+
 ## [1.0.4](https://github.com/SocialGouv/covid-counter/compare/v1.0.3...v1.0.4) (2021-07-28)
 
 
