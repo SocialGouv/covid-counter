@@ -1,0 +1,32 @@
+name: Publish gh-pages
+
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  website:
+    runs-on: ubuntu-latest
+    name: Build and publish
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - uses: actions/cache@v2
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+
+      # build the website
+      - run: |
+          yarn
+          yarn build
+        
+      # deploy build to gh-pages
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@4.1.0
+        with:
+          branch: gh-pages
+          folder: out
