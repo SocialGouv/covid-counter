@@ -23,6 +23,7 @@ jobs:
       - run: |
           yarn
           yarn build
+          touch out/.nojekyll
 
       # deploy build to gh-pages
       - name: Deploy 🚀
