@@ -1,3 +1,10 @@
+## [1.0.6](https://github.com/SocialGouv/covid-counter/compare/v1.0.5...v1.0.6) (2021-07-28)
+
+
+### Bug Fixes
+
+* cosmetics ([bf33236](https://github.com/SocialGouv/covid-counter/commit/bf33236d7a2783e59f059be8e2795f203343438e))
+
 ## [1.0.5](https://github.com/SocialGouv/covid-counter/compare/v1.0.4...v1.0.5) (2021-07-28)
 
 
