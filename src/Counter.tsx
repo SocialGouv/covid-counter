@@ -10,9 +10,9 @@ const pad = (num, count) => {
 };
 
 const useCounter = ({ unit }) => {
-  const startValue = 30000000;
-  const countByDay = 320000;
-  const startDate = new Date("2021-07-28").getTime();
+  const startValue = 39901727;
+  const countByDay = 300000;
+  const startDate = new Date("2021-07-25").getTime();
   const secondIncrement = countByDay / (60 * 60 * 24);
 
   const [value, setValue] = useState(startValue);
