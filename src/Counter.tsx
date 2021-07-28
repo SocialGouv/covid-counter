@@ -1,5 +1,6 @@
 import Link from "next/link";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
+import useInterval from "use-interval";
 
 import type { CSSProperties } from "react";
 
@@ -19,14 +20,12 @@ const useCounter = ({ unit }) => {
 
   const [value, setValue] = useState(null);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const now = new Date().getTime();
-      const secondsDiff = (now - startDate) / 1000;
-      const increment = Math.floor(secondsDiff * secondIncrement);
-      setValue(startValue + increment);
-    }, 200);
-  }, [startDate, secondIncrement]);
+  useInterval(() => {
+    const now = new Date().getTime();
+    const secondsDiff = (now - startDate) / 1000;
+    const increment = Math.floor(secondsDiff * secondIncrement);
+    setValue(startValue + increment);
+  }, 100);
 
   if (!value) {
     return null;
@@ -62,39 +61,30 @@ type CounterProps = {
   unit?: Unit;
   style?: CSSProperties;
 };
-type CounterParams = [CounterProps, any];
 
-export const Counter = React.forwardRef(
-  ({ href, unit, style = {} }: CounterProps, ref) => {
-    const value = useCounter({ unit });
-    let fontSize = "calc(100vw / 5)";
-    if (unit === "millions") {
-      fontSize = "calc(100vw / 3)";
-    } else if (unit === "milliers") {
-      fontSize = "calc(100vw / 3)";
-    } else if (unit === "unites") {
-      fontSize = "calc(100vw / 3)";
-    }
-    const node = useRef<HTMLDivElement>(null);
-    const styles = {
-      ...counterStyle,
-      fontSize,
-      lineHeight: fontSize,
-      ...style,
-    };
-    const content = (
-      <div ref={node} style={styles}>
-        {value}
-      </div>
-    );
-    if (href) {
-      return (
-        <Link href={href}>
-          {/** boxShadow is from dsfr package */}
-          <a style={{ boxShadow: "none" }}>{content}</a>
-        </Link>
-      );
-    }
-    return content;
+export const Counter = ({ href, unit, style = {} }: CounterProps) => {
+  const value = useCounter({ unit });
+  let fontSize = "calc(100vw / 5)";
+  if (unit === "millions") {
+    fontSize = "calc(100vw / 3)";
+  } else if (unit === "milliers") {
+    fontSize = "calc(100vw / 3)";
+  } else if (unit === "unites") {
+    fontSize = "calc(100vw / 3)";
   }
-);
+  const styles = {
+    ...counterStyle,
+    fontSize,
+    lineHeight: fontSize,
+    ...style,
+  };
+  const content = <div style={styles}>{value}</div>;
+  if (href) {
+    return (
+      <Link href={href}>
+        <a>{content}</a>
+      </Link>
+    );
+  }
+  return content;
+};

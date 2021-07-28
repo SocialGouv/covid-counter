@@ -1,3 +1,7 @@
 * {
   font-display: swap;
 }
+a {
+  text-decoration: none !important;
+  box-shadow: none !important;
+}
