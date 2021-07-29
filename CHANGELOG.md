@@ -1,3 +1,10 @@
+## [1.0.10](https://github.com/SocialGouv/covid-counter/compare/v1.0.9...v1.0.10) (2021-07-29)
+
+
+### Bug Fixes
+
+* bigger ([129fb07](https://github.com/SocialGouv/covid-counter/commit/129fb07e6f0854287b806047fd2b97af093a3ad6))
+
 ## [1.0.9](https://github.com/SocialGouv/covid-counter/compare/v1.0.8...v1.0.9) (2021-07-29)
 
 
