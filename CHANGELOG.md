@@ -1,3 +1,10 @@
+## [1.0.9](https://github.com/SocialGouv/covid-counter/compare/v1.0.8...v1.0.9) (2021-07-29)
+
+
+### Bug Fixes
+
+* colors ([5a19b6a](https://github.com/SocialGouv/covid-counter/commit/5a19b6a5f1d9a23ddb6a9952f4a584c0de55dd78))
+
 ## [1.0.8](https://github.com/SocialGouv/covid-counter/compare/v1.0.7...v1.0.8) (2021-07-29)
 
 
