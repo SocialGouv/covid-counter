@@ -1,7 +1,7 @@
 * {
   font-display: swap;
-  background-color: #000091; /* $blue-france */
-  color: white;
+  background-color: white; 
+  color: #000091;/* $blue-france */
 }
 a {
   text-decoration: none !important;
