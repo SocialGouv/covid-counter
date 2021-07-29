@@ -64,18 +64,18 @@ type CounterProps = {
 
 export const Counter = ({ href, unit, style = {} }: CounterProps) => {
   const value = useCounter({ unit });
-  let fontSize = "calc(100vw / 5)";
+  let fontSize = "calc(100vw / 3)";
   if (unit === "millions") {
-    fontSize = "calc(100vw / 3)";
+    fontSize = "calc(100vw / 2)";
   } else if (unit === "milliers") {
-    fontSize = "calc(100vw / 3)";
+    fontSize = "calc(100vw / 2)";
   } else if (unit === "unites") {
-    fontSize = "calc(100vw / 3)";
+    fontSize = "calc(100vw / 2)";
   }
   const styles = {
     ...counterStyle,
     fontSize,
-    lineHeight: fontSize,
+    //lineHeight: fontSize,
     ...style,
   };
   const content = <div style={styles}>{value}</div>;
