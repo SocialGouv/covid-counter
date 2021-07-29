@@ -1,8 +1,12 @@
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import useInterval from "use-interval";
 
 import type { CSSProperties } from "react";
+
+const REFRESH_INTERVAL =
+  (process.env.REFRESH_INTERVAL && parseInt(process.env.REFRESH_INTERVAL)) ||
+  100;
 
 const pad = (num, count) => {
   let padded = num;
@@ -12,22 +16,24 @@ const pad = (num, count) => {
   return padded;
 };
 
-const useCounter = ({ unit }) => {
-  const startValue = 39901727;
-  const countByDay = 300000;
-  const startDate = new Date("2021-07-25").getTime();
-  const secondIncrement = countByDay / (60 * 60 * 24);
-
+const useCounter = ({ initialDate, initialValue, nextValue, unit }) => {
   const [value, setValue] = useState(null);
+
+  // nombre total à prévoir pour la journée
+  const countByDay = nextValue - initialValue || 0;
+  // comptage effectué à 17h45
+  const startDate = new Date(`${initialDate}T17:45:00+02:00`).getTime();
+  // plage de vaccination = sur 13 heures par jour
+  const secondIncrement = countByDay / (60 * 60 * 13);
 
   useInterval(() => {
     const now = new Date().getTime();
     const secondsDiff = (now - startDate) / 1000;
     const increment = Math.floor(secondsDiff * secondIncrement);
-    setValue(startValue + increment);
-  }, 100);
+    setValue(initialValue + increment);
+  }, REFRESH_INTERVAL);
 
-  if (!value) {
+  if (!value || value < 40000000) {
     return null;
   }
 
@@ -56,26 +62,28 @@ const counterStyle = {
 
 type Unit = "millions" | "milliers" | "unites";
 
-type CounterProps = {
+export type CounterProps = {
+  data?: (string | number)[] | void;
   href?: string;
   unit?: Unit;
   style?: CSSProperties;
 };
 
-export const Counter = ({ href, unit, style = {} }: CounterProps) => {
-  const value = useCounter({ unit });
+export const Counter = ({ data, href, unit, style = {} }: CounterProps) => {
+  const initialDate = data && data[0];
+  const initialValue = data && data[1];
+  const nextValue = data && data[2];
+  const value = useCounter({ initialDate, initialValue, nextValue, unit });
   let fontSize = "calc(100vw / 3)";
-  if (unit === "millions") {
+  if (unit) {
     fontSize = "calc(100vw / 2)";
-  } else if (unit === "milliers") {
-    fontSize = "calc(100vw / 2)";
-  } else if (unit === "unites") {
-    fontSize = "calc(100vw / 2)";
+  }
+  if (!data) {
+    return null;
   }
   const styles = {
     ...counterStyle,
     fontSize,
-    //lineHeight: fontSize,
     ...style,
   };
   const content = <div style={styles}>{value}</div>;
