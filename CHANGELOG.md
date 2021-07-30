@@ -1,3 +1,15 @@
+# [1.1.0](https://github.com/SocialGouv/covid-counter/compare/v1.0.10...v1.1.0) (2021-07-30)
+
+
+### Bug Fixes
+
+* no date between 21h and 8h ([8641a88](https://github.com/SocialGouv/covid-counter/commit/8641a888e0cd98a50dd1aaeb04453d8a544a0f8e))
+
+
+### Features
+
+* load remote data ([1092957](https://github.com/SocialGouv/covid-counter/commit/1092957a842ef6ed3c495077718757ae65470598))
+
 ## [1.0.10](https://github.com/SocialGouv/covid-counter/compare/v1.0.9...v1.0.10) (2021-07-29)
 
 
