@@ -1,7 +1,7 @@
 import Link from "next/link";
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import useInterval from "use-interval";
-
+import { setHours, startOfDay, differenceInCalendarDays } from "date-fns";
 import type { CSSProperties } from "react";
 
 const REFRESH_INTERVAL =
@@ -16,32 +16,46 @@ const pad = (num, count) => {
   return padded;
 };
 
-const useCounter = ({ initialDate, initialValue, nextValue, unit }) => {
-  const [value, setValue] = useState(null);
-
+const useCounter = ({ referenceDate, referenceValue, nextValue, unit }) => {
   // nombre total à prévoir pour la journée
-  const countByDay = nextValue - initialValue || 0;
-  // comptage effectué à 17h45
-  const startDate = new Date(`${initialDate}T17:45:00+02:00`).getTime();
+  const countByDay = nextValue - referenceValue || 0;
   // plage de vaccination = sur 13 heures par jour
-  const secondIncrement = countByDay / (60 * 60 * 13);
+  const now = new Date();
+  const incrementRate = 1; // todo
+  const secondIncrement = (countByDay / (60 * 60 * 24)) * incrementRate;
+  // setup initial value
+  const getNewValue = () => {
+    const now = new Date();
+    if (!referenceDate || now < referenceDate) {
+      return;
+    }
 
-  useInterval(() => {
-    const now = new Date().getTime();
-    const secondsDiff = (now - startDate) / 1000;
+    let secondsDiff = (now.getTime() - referenceDate.getTime()) / 1000;
+
     const increment = Math.floor(secondsDiff * secondIncrement);
-    setValue(initialValue + increment);
+    const newValue = referenceValue + increment;
+
+    return newValue; // Math.min(nextValue, newValue);
+  };
+
+  const [value, setValue] = useState(getNewValue());
+
+  // repeat
+  useInterval(() => {
+    setValue(getNewValue());
   }, REFRESH_INTERVAL);
 
-  if (!value || value < 40000000) {
+  if (!referenceDate || !value || value < 40000000) {
     return null;
   }
 
+  const millions = Math.floor(value / 1000000);
+
   if (unit === "millions") {
-    return Math.floor(value / 1000000);
+    return millions;
   } else if (unit === "milliers") {
-    const millions = Math.floor(value / 1000000);
-    return pad(Math.floor((value - millions * 1000000) / 1000), 3);
+    const milliers = Math.floor((value - millions * 1000000) / 1000);
+    return pad(milliers, 3);
   } else if (unit === "unites") {
     const milliers = Math.floor(value / 1000);
     return pad(Math.floor(value - milliers * 1000), 3);
@@ -70,15 +84,16 @@ export type CounterProps = {
 };
 
 export const Counter = ({ data, href, unit, style = {} }: CounterProps) => {
-  const initialDate = data && data[0];
-  const initialValue = data && data[1];
+  const referenceDate = data && data[0];
+  const referenceValue = data && data[1];
   const nextValue = data && data[2];
-  const value = useCounter({ initialDate, initialValue, nextValue, unit });
+  const value = useCounter({ referenceDate, referenceValue, nextValue, unit });
   let fontSize = "calc(100vw / 3)";
   if (unit) {
     fontSize = "calc(100vw / 2)";
   }
-  if (!data) {
+
+  if (!data || !value) {
     return null;
   }
   const styles = {
