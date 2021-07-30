@@ -1,3 +1,11 @@
+## [1.1.1](https://github.com/SocialGouv/covid-counter/compare/v1.1.0...v1.1.1) (2021-07-30)
+
+
+### Bug Fixes
+
+* off times ([eaafb1c](https://github.com/SocialGouv/covid-counter/commit/eaafb1c787fb3121ebaaf98e6b5df24cf6f6e5b1))
+* timeout and DATA_URL ([3f370d8](https://github.com/SocialGouv/covid-counter/commit/3f370d80b27dc6779360d8eb1ed8e54d3badd3de))
+
 # [1.1.0](https://github.com/SocialGouv/covid-counter/compare/v1.0.10...v1.1.0) (2021-07-30)
 
 
