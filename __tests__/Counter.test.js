@@ -51,11 +51,25 @@ test(`Valid data should return intermediate results at 20:00`, () => {
   expect(text).toEqual("41875000");
 });
 
-test(`Valid data should return no results at 21:00`, () => {
+test(`Valid data should return final result at 21:00`, () => {
   jest.setSystemTime(new Date("2021-07-29T21:00:00+02:00"));
   render(<Counter data={sampleData} />);
   const text = document.body.textContent;
-  expect(text).toEqual("");
+  expect(text).toEqual("42708330");
+});
+
+test(`Valid data should return final results at 21:30`, () => {
+  jest.setSystemTime(new Date("2021-07-29T21:30:00+02:00"));
+  render(<Counter data={sampleData} />);
+  const text = document.body.textContent;
+  expect(text).toEqual("42708330");
+});
+
+test(`Valid data should return final results at 7:30 the day after`, () => {
+  jest.setSystemTime(new Date("2021-07-30T07:30:00+02:00"));
+  render(<Counter data={sampleData} />);
+  const text = document.body.textContent;
+  expect(text).toEqual("42708330");
 });
 
 test(`Valid data should return intermediate results at 08:00 the next day`, () => {
@@ -72,9 +86,23 @@ test(`Valid data should return final results at 17:45 the next day`, () => {
   expect(text).toEqual("60000000");
 });
 
-test(`Valid data should return final results at 18:45 the next day`, () => {
+test(`Valid data should return intermediate results at 18:45 the next day`, () => {
   jest.setSystemTime(new Date("2021-07-30T18:45:00+02:00"));
   render(<Counter data={sampleData} />);
   const text = document.body.textContent;
   expect(text).toEqual("60833333");
+});
+
+test(`Valid data should return final results at 21:00 the next day`, () => {
+  jest.setSystemTime(new Date("2021-07-30T21:00:00+02:00"));
+  render(<Counter data={sampleData} />);
+  const text = document.body.textContent;
+  expect(text).toEqual("62708330");
+});
+
+test(`Valid data should return final results at 7:45 the next day 2`, () => {
+  jest.setSystemTime(new Date("2021-07-31T07:45:00+02:00"));
+  render(<Counter data={sampleData} />);
+  const text = document.body.textContent;
+  expect(text).toEqual("62708330");
 });

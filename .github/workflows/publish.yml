@@ -24,7 +24,6 @@ jobs:
       - env:
           DATA_URL: ${{ secrets.DATA_URL }}
         run: |
-          echo $DATA_URL
           yarn
           yarn build
           touch out/.nojekyll

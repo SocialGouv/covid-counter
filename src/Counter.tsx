@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import useInterval from "use-interval";
-import { setHours, startOfDay, differenceInCalendarDays } from "date-fns";
+import { set, setHours, startOfDay, differenceInCalendarDays } from "date-fns";
 import type { CSSProperties } from "react";
 
 import { pickDayValues } from "../src/useData";
@@ -35,8 +35,22 @@ const useCounter = ({ referenceDate, referenceValue, nextValue, unit }) => {
     let secondsDiff = (now.getTime() - referenceDate.getTime()) / 1000;
 
     const increment = Math.floor(secondsDiff * secondIncrement);
-    const newValue = referenceValue + increment;
+    let newValue = referenceValue + increment;
 
+    const daysDiff = differenceInCalendarDays(now, referenceDate);
+    if (now.getHours() > 20) {
+      // freeze on last prevision after 21h
+      const maxTime = set(referenceDate, { hours: 21, minutes: 0, seconds: 0 });
+      const secondsDiff = (maxTime.getTime() - referenceDate.getTime()) / 1000;
+      const increment = Math.floor(secondsDiff * secondIncrement);
+      newValue = referenceValue + (increment - (increment % 10));
+    } else if (now.getHours() < 8 && daysDiff > 0) {
+      // freeze on last prevision before 8h
+      const maxTime = set(referenceDate, { hours: 21, minutes: 0, seconds: 0 });
+      const secondsDiff = (maxTime.getTime() - referenceDate.getTime()) / 1000;
+      const increment = Math.floor(secondsDiff * secondIncrement);
+      newValue = referenceValue + (increment - (increment % 10));
+    }
     return newValue; // Math.min(nextValue, newValue);
   };
 
@@ -46,10 +60,6 @@ const useCounter = ({ referenceDate, referenceValue, nextValue, unit }) => {
   useInterval(() => {
     setValue(getNewValue());
   }, REFRESH_INTERVAL);
-
-  if (now.getHours() >= 21 || now.getHours() < 8) {
-    return null;
-  }
 
   if (!referenceDate || !value || value < 40000000) {
     return null;
