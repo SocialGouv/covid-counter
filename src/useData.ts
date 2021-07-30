@@ -14,7 +14,7 @@ const URL = process.env.DATA_URL || "/sample.csv";
 // en ms
 const INTERVAL =
   (process.env.DATA_URL_INTERVAL && parseInt(process.env.DATA_URL_INTERVAL)) ||
-  10000;
+  60000;
 
 /*
 fetch, retry and deduplicate DATA_URL calls

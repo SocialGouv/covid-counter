@@ -20,7 +20,9 @@ jobs:
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
 
       # build the website
-      - run: |
+      - env:
+          DATA_URL: ${{ secrets.DATA_URL }}
+        run: |
           yarn
           yarn build
           touch out/.nojekyll
