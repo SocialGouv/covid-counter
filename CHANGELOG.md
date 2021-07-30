@@ -1,3 +1,10 @@
+## [1.1.3](https://github.com/SocialGouv/covid-counter/compare/v1.1.2...v1.1.3) (2021-07-30)
+
+
+### Bug Fixes
+
+* env + finish count ([3568154](https://github.com/SocialGouv/covid-counter/commit/35681540d1fba59825cc085660b9e06c686cc337))
+
 ## [1.1.2](https://github.com/SocialGouv/covid-counter/compare/v1.1.1...v1.1.2) (2021-07-30)
 
 
