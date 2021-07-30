@@ -18,18 +18,23 @@ const sampleData = [
 
 test(`No data should return nothing`, () => {
   render(<Counter />);
-  expect(screen.text).toEqual(undefined);
+  jest.setSystemTime(new Date("2021-07-29T17:45:00+02:00"));
+  const text = document.body.textContent;
+  expect(text).toEqual("");
 });
 
 test(`Invalid data should return nothing`, () => {
   render(<Counter data={invalidData} />);
-  expect(screen.text).toEqual(undefined);
+  jest.setSystemTime(new Date("2021-07-29T17:45:00+02:00"));
+  const text = document.body.textContent;
+  expect(text).toEqual("");
 });
 
 test(`Posterious data return nothing`, () => {
   jest.setSystemTime(new Date("2021-07-29T08:00:00+02:00"));
   render(<Counter data={invalidData} />);
-  expect(screen.text).toEqual(undefined);
+  const text = document.body.textContent;
+  expect(text).toEqual("");
 });
 
 test(`Valid data should return initial results at 17:45`, () => {
@@ -39,11 +44,18 @@ test(`Valid data should return initial results at 17:45`, () => {
   expect(text).toEqual("40000000");
 });
 
-test(`Valid data should return intermediate results at 21:00`, () => {
+test(`Valid data should return intermediate results at 20:00`, () => {
+  jest.setSystemTime(new Date("2021-07-29T20:00:00+02:00"));
+  render(<Counter data={sampleData} />);
+  const text = document.body.textContent;
+  expect(text).toEqual("41875000");
+});
+
+test(`Valid data should return no results at 21:00`, () => {
   jest.setSystemTime(new Date("2021-07-29T21:00:00+02:00"));
   render(<Counter data={sampleData} />);
   const text = document.body.textContent;
-  expect(text).toEqual("42708333");
+  expect(text).toEqual("");
 });
 
 test(`Valid data should return intermediate results at 08:00 the next day`, () => {
