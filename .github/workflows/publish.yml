@@ -1,6 +1,7 @@
 name: Publish gh-pages
 
 on:
+  workflow_dispatch:
   push:
     tags:
       - v*
@@ -23,9 +24,11 @@ jobs:
       - env:
           DATA_URL: ${{ secrets.DATA_URL }}
         run: |
+          echo $DATA_URL
           yarn
           yarn build
           touch out/.nojekyll
+
 
       # deploy build to gh-pages
       - name: Deploy 🚀
