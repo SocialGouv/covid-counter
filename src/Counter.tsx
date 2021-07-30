@@ -4,6 +4,8 @@ import useInterval from "use-interval";
 import { setHours, startOfDay, differenceInCalendarDays } from "date-fns";
 import type { CSSProperties } from "react";
 
+import { pickDayValues } from "../src/useData";
+
 const REFRESH_INTERVAL =
   (process.env.REFRESH_INTERVAL && parseInt(process.env.REFRESH_INTERVAL)) ||
   100;
@@ -19,7 +21,6 @@ const pad = (num, count) => {
 const useCounter = ({ referenceDate, referenceValue, nextValue, unit }) => {
   // nombre total à prévoir pour la journée
   const countByDay = nextValue - referenceValue || 0;
-  // plage de vaccination = sur 13 heures par jour
   const now = new Date();
   const incrementRate = 1; // todo
   const secondIncrement = (countByDay / (60 * 60 * 24)) * incrementRate;
@@ -84,9 +85,11 @@ export type CounterProps = {
 };
 
 export const Counter = ({ data, href, unit, style = {} }: CounterProps) => {
-  const referenceDate = data && data[0];
-  const referenceValue = data && data[1];
-  const nextValue = data && data[2];
+  const values = data && pickDayValues(data);
+  const referenceDate = values && values[0];
+  const referenceValue = values && values[1];
+  const nextValue = values && values[2];
+
   const value = useCounter({ referenceDate, referenceValue, nextValue, unit });
   let fontSize = "calc(100vw / 3)";
   if (unit) {

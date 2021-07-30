@@ -41,7 +41,10 @@ const fetcher = () => {
             minutes: 45,
             seconds: 0,
           });
-          return [startDate, ...cells.slice(1).map((v) => parseInt(v))];
+          return [
+            formatISO(startDate),
+            ...cells.slice(1).map((v) => parseInt(v)),
+          ];
         }
       }
     })
@@ -57,13 +60,14 @@ export const pickDayValues = (row) => {
   const [startDate, ...previsions] = row;
   const now = new Date();
 
-  if (isBefore(now, startDate)) {
+  const referenceDate = new Date(startDate);
+  if (isBefore(now, referenceDate)) {
     // dont parse results before expected date/time
-    console.log("error: now is before startDate");
+    console.log("error: now is before referenceDate");
     return;
   }
 
-  let daysDiff = differenceInCalendarDays(now, startDate);
+  let daysDiff = differenceInCalendarDays(now, referenceDate);
   const todaySwitchStart = set(now, { hours: 17, minutes: 45, seconds: 0 });
   if (daysDiff >= 1 && isBefore(now, todaySwitchStart)) {
     // offset-1 si on est avant 17h45 (on se base sur les chiffres de la veille)
@@ -74,8 +78,7 @@ export const pickDayValues = (row) => {
     return;
   }
   // set the new reference date
-  let valueDateReference = addDays(startDate, daysDiff);
-  //console.log({ row, valueDateReference, daysDiff });
+  let valueDateReference = addDays(referenceDate, daysDiff);
 
   // only return current day and next day values
   const result = [
@@ -93,11 +96,8 @@ export const useData = (): DataResult => {
     fetcher,
   });
   if (swr.data) {
-    const parsedValues = pickDayValues(swr.data);
-    console.log("data", parsedValues);
-    if (parsedValues && (!data || data.join("") !== parsedValues.join(""))) {
-      //  console.log("parsedValues2", parsedValues);
-      setData(parsedValues);
+    if (!data || swr.data.join("") !== data.join("")) {
+      setData(swr.data);
     }
   }
   return data;
