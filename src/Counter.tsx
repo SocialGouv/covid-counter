@@ -25,9 +25,6 @@ const useCounter = ({ referenceDate, referenceValue, nextValue, unit }) => {
   const incrementRate = 1; // todo
   const secondIncrement = (countByDay / (60 * 60 * 24)) * incrementRate;
 
-  if (now.getHours() >= 21 || now.getHours() < 8) {
-    return;
-  }
   // setup initial value
   const getNewValue = () => {
     const now = new Date();
@@ -49,6 +46,10 @@ const useCounter = ({ referenceDate, referenceValue, nextValue, unit }) => {
   useInterval(() => {
     setValue(getNewValue());
   }, REFRESH_INTERVAL);
+
+  if (now.getHours() >= 21 || now.getHours() < 8) {
+    return null;
+  }
 
   if (!referenceDate || !value || value < 40000000) {
     return null;
