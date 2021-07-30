@@ -5,11 +5,12 @@ import {
   addDays,
   formatISO,
   differenceInCalendarDays,
-  closestIndexTo,
   isBefore,
 } from "date-fns";
 
-const URL = process.env.DATA_URL || "/sample.csv";
+const URL =
+  process.env.DATA_URL ||
+  "https://covidcounter.blob.core.windows.net/$web/latest.csv";
 
 // en ms
 const INTERVAL =
