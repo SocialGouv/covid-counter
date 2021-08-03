@@ -17,6 +17,10 @@ const sampleData = [
   100000000,
 ];
 
+test("should always be UTC+02:00", () => {
+  expect(new Date().getTimezoneOffset()).toBe(-120);
+});
+
 test(`No data should return nothing`, () => {
   render(<Counter />);
   jest.setSystemTime(new Date("2021-07-29T17:45:00+02:00"));

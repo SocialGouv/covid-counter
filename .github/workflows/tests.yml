@@ -16,6 +16,11 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
+      - name: Setup timezone
+        uses: zcong1993/setup-timezone@master
+        with:
+          timezone: Europe/Paris
+
       - name: Install
         run: |
           yarn
