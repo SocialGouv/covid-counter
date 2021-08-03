@@ -14,7 +14,12 @@ const sampleData = [
   40000000,
   60000000,
   80000000,
+  100000000,
 ];
+
+test("should always be UTC+02:00", () => {
+  expect(new Date().getTimezoneOffset()).toBe(-120);
+});
 
 test(`No data should return nothing`, () => {
   render(<Counter />);
@@ -105,4 +110,25 @@ test(`Valid data should return final results at 7:45 the next day 2`, () => {
   render(<Counter data={sampleData} />);
   const text = document.body.textContent;
   expect(text).toEqual("62708330");
+});
+
+test(`Valid data should return expected results at 17:45 the next day`, () => {
+  jest.setSystemTime(new Date("2021-07-31T17:45:00+02:00"));
+  render(<Counter data={sampleData} />);
+  const text = document.body.textContent;
+  expect(text).toEqual("80000000");
+});
+
+test(`Valid data should return final results at 21:00 the next day`, () => {
+  jest.setSystemTime(new Date("2021-07-31T21:00:00+02:00"));
+  render(<Counter data={sampleData} />);
+  const text = document.body.textContent;
+  expect(text).toEqual("82708330");
+});
+
+test(`Valid data should return final results at 7:45 the next day 2`, () => {
+  jest.setSystemTime(new Date("2021-08-01T07:45:00+02:00"));
+  render(<Counter data={sampleData} />);
+  const text = document.body.textContent;
+  expect(text).toEqual("82708330");
 });
