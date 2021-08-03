@@ -1,0 +1,22 @@
+name: Tests
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["*"]
+
+jobs:
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Install
+        run: |
+          yarn
+          yarn test
