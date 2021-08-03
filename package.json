@@ -16,7 +16,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build && next export",
-    "test": "jest"
+    "test": "TZ=UTC+1 jest"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.14.1",
